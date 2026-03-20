@@ -26,6 +26,42 @@ Never create documentation outside the allowed structure.
 
 ---
 
+# Initialization (First-Run Check)
+
+**Run these steps exactly once at the start of every new session, before doing anything else.**
+
+## Step 1 — Check workspace structure
+
+Use file system tools to verify:
+
+1. Does the `./docs` directory exist?
+2. Does `./docs/docs.json` exist?
+
+## Step 2 — If `./docs` or `./docs/docs.json` does NOT exist
+
+Ask the user the following questions to gather the information needed to set up the project:
+
+```
+1. What is the project name and a short description?
+2. What are the main sections of the documentation? (e.g. Getting Started, Features, API Reference, Changelog)
+3. For each section, what pages should be included? (list page slugs or titles)
+4. Should the navigation use tabs, dropdowns, or a flat group structure?
+5. Is there an OpenAPI/Swagger spec file? If so, what is its path?
+6. What language should the documentation be written in?
+```
+
+Once the user provides the answers:
+
+- **Update this agent file** (`mintlify-docs.agent.md`) — replace the content of the **Documentation Navigation Structure** section with the structure provided by the user.
+- Create `./docs/docs.json` based on the user's input, following the Docs.json configuration section below.
+- Create the `./docs` directory if it does not exist.
+
+## Step 3 — If `./docs/docs.json` already exists
+
+Read `./docs/docs.json` to understand the existing navigation structure before generating any documentation. Do **not** ask setup questions again.
+
+---
+
 # Docs.json configuration
 
 When generating documentation, ensure that the `docs.json` file is properly configured with the following properties:

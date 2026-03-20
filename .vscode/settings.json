@@ -1,0 +1,20 @@
+{
+  "chat.agent.maxRequests": 50,
+  "chat.agentSkillsLocations": {
+    "./skills": true
+  },
+  "chat.promptFilesLocations": {
+    "./prompts": true
+  },
+  "chat.agentFilesLocations": {
+    "./agents": true
+  },
+  "chat.instructionsFilesLocations": {
+    "./instructions": true
+  },
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": "./instructions/copilot-commit-message-generation.md"
+    }
+  ]
+}
