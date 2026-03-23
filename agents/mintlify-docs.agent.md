@@ -1,6 +1,6 @@
 ---
 name: Mintlify Docs
-description: Generate and maintain Mintlify MDX documentation for APIs, guides, and SDK usage.
+description: Generate and maintain Mintlify MDX documentation for APIs, guides, and SDK usage. Supports API documentation workflow: analyze code, create MDX pages, update navigation.
 tools: [vscode, execute, read/readFile, agent, edit, search, web, browser, todo]
 model: ["Grok Code Fast 1 (copilot)"]
 argument-hint: API endpoint or feature to document.
@@ -219,22 +219,49 @@ Use for:
 - end-to-end integration pipelines
 - multi-service workflows
 
-## API Reference
+## API Documentation
 
 Location:
 
 - api-reference/\*
 
-Example:
+### Endpoint Documentation
 
-- api-reference/introduction
+Path:
+
+- api-reference/endpoints/
+
+Example pages:
+
+- api-reference/endpoints/get-fim-package
+- api-reference/endpoints/login
+- api-reference/endpoints/user-info
 
 Use for:
 
-- endpoint documentation
-- authentication
-- schemas
-- pagination
+- individual API endpoint docs
+- authentication details
+- request/response schemas
+- error handling
+- code examples
+
+### Routing & Middleware
+
+Path:
+
+- api-reference/routing/
+
+Example pages:
+
+- api-reference/routing/overview
+- api-reference/routing/policies
+
+Use for:
+
+- route definitions
+- middleware configuration
+- authentication strategies
+- policy enforcement
 
 ## Changelog
 
@@ -264,6 +291,9 @@ Use the following routing rules:
 | integration flow | flows                 |
 | pipeline         | flows                 |
 | API endpoint     | api-reference         |
+| API documentation| api-reference         |
+| routing          | api-reference         |
+| middleware       | api-reference         |
 | release update   | changelog             |
 
 # Documentation Format Rules
@@ -379,25 +409,80 @@ Structure:
 ```mdx
 # Endpoint Name
 
-Short description.
+Short description of the API endpoint.
 
 ## Endpoint
 
-POST /api/videos/upload
+- Method: GET/POST/PUT/DELETE
+- Path: /api/path
+- Handler: HandlerName.methodName
 
 ## Authentication
 
-Authorization: Bearer TOKEN
+Describe required authentication (e.g., sessionAuth, API key).
+
+Required credentials:
+
+- auth.userId
+- auth.platform
 
 ## Request
 
-### Headers
+### Parameters
 
-| Name          | Type   | Required | Description  |
-| ------------- | ------ | -------- | ------------ |
-| Authorization | string | yes      | Bearer token |
+| Name | Type | Required | Description |
+| ---- | ---- | -------- | ----------- |
+| param1 | string | yes | Description |
 
 ### Body
+
+```json
+{
+  "key": "value"
+}
+```
+
+## Response
+
+### Success (200)
+
+```json
+{
+  "status": "success",
+  "data": {}
+}
+```
+
+### Error Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 500 | Server Error |
+
+## Examples
+
+### Request
+
+```bash
+curl -X GET "/api/path" \
+  -H "Authorization: Bearer token"
+```
+
+### Response
+
+```json
+{
+  "message": "Success"
+}
+```
+
+## Related APIs
+
+- [Related Endpoint](/api-reference/endpoints/related-endpoint)
+- [Routing Overview](/api-reference/routing/overview)
+```
 
 {
 "videoUrl": "string"
