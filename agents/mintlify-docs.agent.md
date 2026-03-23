@@ -482,6 +482,54 @@ curl -X GET "/api/path" \
 
 - [Related Endpoint](/api-reference/endpoints/related-endpoint)
 - [Routing Overview](/api-reference/routing/overview)
+
+## Logic Description
+
+Describe API processing logic in detail from all layers:
+
+### Router Layer
+- Middleware chain and routing logic
+- Authentication/authorization flow
+
+### Middleware Layer (if present)
+- Describe each middleware in the chain
+- Processing logic of each middleware (auth, validation, logging, rate limiting, etc.)
+- Execution order and dependencies
+
+### Controller Layer  
+- Main handler logic and error handling
+- Parameter validation and processing
+
+### Service Layer
+- Helper functions and business logic
+- Data transformations and external calls
+
+Include processing flow, conditions, business rules and edge cases.
+
+## Relations
+
+List external services and interaction methods:
+
+- Redis: cache keys, TTL
+- RabbitMQ: message queues
+- PostgreSQL: DB queries, models
+
+## Operational Notes
+
+Points to note when deploying/maintaining:
+
+- Performance considerations
+- Monitoring points
+- Common failure scenarios
+
+## Refactor Suggestions
+
+If there is technical debt or improvements:
+
+- Code smells to address
+- Performance optimizations
+- Safer rollout strategies
+```
 ```
 
 {
