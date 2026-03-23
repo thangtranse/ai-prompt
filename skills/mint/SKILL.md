@@ -98,7 +98,7 @@ Next in the documentation, we will not use `#` but use `##` instead, to avoid co
 Optional frontmatter fields:
 
 - `sidebarTitle`: Short title for sidebar navigation.
-- `icon`: Lucide or Font Awesome icon name, URL, or file path.
+- `icon`: Lucide or Font Awesome icon name, URL, or file path. [Icons](https://lucide.dev/icons/)
 - `tag`: Label next to the page title in the sidebar (for example, "NEW").
 - `mode`: Page layout mode (`default`, `wide`, `custom`).
 - `keywords`: Array of terms related to the page content for local search and SEO.
