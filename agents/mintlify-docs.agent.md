@@ -20,7 +20,7 @@ Your tasks include:
 - Prefer root-level `docs.json` unless the repository explicitly uses `docs/docs.json`.
 - Linking related documentation pages together
 - Writing clear, concise, and accurate technical content
-- Write documentation in Vietnamese, as the project is intended for Vietnamese-speaking users.
+- Write documentation in Vietnamese, as the project is intended for Vietnamese-speaking users. (please use Vietnamese with diacritics)
 
 Never create documentation outside the allowed structure.
 
@@ -283,18 +283,18 @@ Before generating documentation:
 
 Use the following routing rules:
 
-| Topic            | Section               |
-| ---------------- | --------------------- |
-| upload           | features/video-upload |
-| translation      | features/translation  |
-| workflow         | features/workflows    |
-| integration flow | flows                 |
-| pipeline         | flows                 |
-| API endpoint     | api-reference         |
-| API documentation| api-reference         |
-| routing          | api-reference         |
-| middleware       | api-reference         |
-| release update   | changelog             |
+| Topic             | Section               |
+| ----------------- | --------------------- |
+| upload            | features/video-upload |
+| translation       | features/translation  |
+| workflow          | features/workflows    |
+| integration flow  | flows                 |
+| pipeline          | flows                 |
+| API endpoint      | api-reference         |
+| API documentation | api-reference         |
+| routing           | api-reference         |
+| middleware        | api-reference         |
+| release update    | changelog             |
 
 # Documentation Format Rules
 
@@ -406,7 +406,7 @@ Used for:
 
 Structure:
 
-```mdx
+````mdx
 # Endpoint Name
 
 Short description of the API endpoint.
@@ -430,9 +430,9 @@ Required credentials:
 
 ### Parameters
 
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| param1 | string | yes | Description |
+| Name   | Type   | Required | Description |
+| ------ | ------ | -------- | ----------- |
+| param1 | string | yes      | Description |
 
 ### Body
 
@@ -441,6 +441,7 @@ Required credentials:
   "key": "value"
 }
 ```
+````
 
 ## Response
 
@@ -455,11 +456,11 @@ Required credentials:
 
 ### Error Responses
 
-| Code | Description |
-| ---- | ----------- |
-| 400 | Bad Request |
-| 401 | Unauthorized |
-| 500 | Server Error |
+| Code | Description  |
+| ---- | ------------ |
+| 400  | Bad Request  |
+| 401  | Unauthorized |
+| 500  | Server Error |
 
 ## Examples
 
@@ -488,19 +489,23 @@ curl -X GET "/api/path" \
 Describe API processing logic in detail from all layers:
 
 ### Router Layer
+
 - Middleware chain and routing logic
 - Authentication/authorization flow
 
 ### Middleware Layer (if present)
+
 - Describe each middleware in the chain
 - Processing logic of each middleware (auth, validation, logging, rate limiting, etc.)
 - Execution order and dependencies
 
-### Controller Layer  
+### Controller Layer
+
 - Main handler logic and error handling
 - Parameter validation and processing
 
 ### Service Layer
+
 - Helper functions and business logic
 - Data transformations and external calls
 
@@ -529,7 +534,9 @@ If there is technical debt or improvements:
 - Code smells to address
 - Performance optimizations
 - Safer rollout strategies
+
 ```
+
 ```
 
 {
@@ -558,7 +565,8 @@ curl -X POST ...
 ### Related APIs
 
 List related endpoints.
-```
+
+````
 
 # Changelog Format
 
@@ -588,4 +596,4 @@ All notable changes to this project.
 ### Fixed
 
 - Bug fixes
-```
+````
