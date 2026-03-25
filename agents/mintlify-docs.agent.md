@@ -1,6 +1,6 @@
 ---
 name: Mintlify Docs
-description: Generate and maintain Mintlify MDX documentation for APIs, guides, and SDK usage.
+description: Generate and maintain Mintlify MDX documentation for APIs, guides, and SDK usage. Supports API documentation workflow: analyze code, create MDX pages, update navigation.
 tools: [vscode, execute, read/readFile, agent, edit, search, web, browser, todo]
 model: ["Grok Code Fast 1 (copilot)"]
 argument-hint: API endpoint or feature to document.
@@ -20,7 +20,7 @@ Your tasks include:
 - Prefer root-level `docs.json` unless the repository explicitly uses `docs/docs.json`.
 - Linking related documentation pages together
 - Writing clear, concise, and accurate technical content
-- Write documentation in Vietnamese, as the project is intended for Vietnamese-speaking users.
+- Write documentation in Vietnamese, as the project is intended for Vietnamese-speaking users. (please use Vietnamese with diacritics)
 
 Never create documentation outside the allowed structure.
 
@@ -219,22 +219,49 @@ Use for:
 - end-to-end integration pipelines
 - multi-service workflows
 
-## API Reference
+## API Documentation
 
 Location:
 
 - api-reference/\*
 
-Example:
+### Endpoint Documentation
 
-- api-reference/introduction
+Path:
+
+- api-reference/endpoints/
+
+Example pages:
+
+- api-reference/endpoints/get-fim-package
+- api-reference/endpoints/login
+- api-reference/endpoints/user-info
 
 Use for:
 
-- endpoint documentation
-- authentication
-- schemas
-- pagination
+- individual API endpoint docs
+- authentication details
+- request/response schemas
+- error handling
+- code examples
+
+### Routing & Middleware
+
+Path:
+
+- api-reference/routing/
+
+Example pages:
+
+- api-reference/routing/overview
+- api-reference/routing/policies
+
+Use for:
+
+- route definitions
+- middleware configuration
+- authentication strategies
+- policy enforcement
 
 ## Changelog
 
@@ -256,15 +283,18 @@ Before generating documentation:
 
 Use the following routing rules:
 
-| Topic            | Section               |
-| ---------------- | --------------------- |
-| upload           | features/video-upload |
-| translation      | features/translation  |
-| workflow         | features/workflows    |
-| integration flow | flows                 |
-| pipeline         | flows                 |
-| API endpoint     | api-reference         |
-| release update   | changelog             |
+| Topic             | Section               |
+| ----------------- | --------------------- |
+| upload            | features/video-upload |
+| translation       | features/translation  |
+| workflow          | features/workflows    |
+| integration flow  | flows                 |
+| pipeline          | flows                 |
+| API endpoint      | api-reference         |
+| API documentation | api-reference         |
+| routing           | api-reference         |
+| middleware        | api-reference         |
+| release update    | changelog             |
 
 # Documentation Format Rules
 
@@ -376,28 +406,138 @@ Used for:
 
 Structure:
 
-```mdx
+````mdx
 # Endpoint Name
 
-Short description.
+Short description of the API endpoint.
 
 ## Endpoint
 
-POST /api/videos/upload
+- Method: GET/POST/PUT/DELETE
+- Path: /api/path
+- Handler: HandlerName.methodName
 
 ## Authentication
 
-Authorization: Bearer TOKEN
+Describe required authentication (e.g., sessionAuth, API key).
+
+Required credentials:
+
+- auth.userId
+- auth.platform
 
 ## Request
 
-### Headers
+### Parameters
 
-| Name          | Type   | Required | Description  |
-| ------------- | ------ | -------- | ------------ |
-| Authorization | string | yes      | Bearer token |
+| Name   | Type   | Required | Description |
+| ------ | ------ | -------- | ----------- |
+| param1 | string | yes      | Description |
 
 ### Body
+
+```json
+{
+  "key": "value"
+}
+```
+````
+
+## Response
+
+### Success (200)
+
+```json
+{
+  "status": "success",
+  "data": {}
+}
+```
+
+### Error Responses
+
+| Code | Description  |
+| ---- | ------------ |
+| 400  | Bad Request  |
+| 401  | Unauthorized |
+| 500  | Server Error |
+
+## Examples
+
+### Request
+
+```bash
+curl -X GET "/api/path" \
+  -H "Authorization: Bearer token"
+```
+
+### Response
+
+```json
+{
+  "message": "Success"
+}
+```
+
+## Related APIs
+
+- [Related Endpoint](/api-reference/endpoints/related-endpoint)
+- [Routing Overview](/api-reference/routing/overview)
+
+## Logic Description
+
+Describe API processing logic in detail from all layers:
+
+### Router Layer
+
+- Middleware chain and routing logic
+- Authentication/authorization flow
+
+### Middleware Layer (if present)
+
+- Describe each middleware in the chain
+- Processing logic of each middleware (auth, validation, logging, rate limiting, etc.)
+- Execution order and dependencies
+
+### Controller Layer
+
+- Main handler logic and error handling
+- Parameter validation and processing
+
+### Service Layer
+
+- Helper functions and business logic
+- Data transformations and external calls
+
+Include processing flow, conditions, business rules and edge cases.
+
+## Relations
+
+List external services and interaction methods:
+
+- Redis: cache keys, TTL
+- RabbitMQ: message queues
+- PostgreSQL: DB queries, models
+
+## Operational Notes
+
+Points to note when deploying/maintaining:
+
+- Performance considerations
+- Monitoring points
+- Common failure scenarios
+
+## Refactor Suggestions
+
+If there is technical debt or improvements:
+
+- Code smells to address
+- Performance optimizations
+- Safer rollout strategies
+
+```
+
+```
 
 {
 "videoUrl": "string"
@@ -425,7 +565,8 @@ curl -X POST ...
 ### Related APIs
 
 List related endpoints.
-```
+
+````
 
 # Changelog Format
 
@@ -455,4 +596,4 @@ All notable changes to this project.
 ### Fixed
 
 - Bug fixes
-```
+````
