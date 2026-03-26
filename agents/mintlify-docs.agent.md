@@ -42,12 +42,8 @@ Use file system tools to verify:
 Ask the user the following questions to gather the information needed to set up the project:
 
 ```
-1. What is the project name and a short description?
-2. What are the main sections of the documentation? (e.g. Getting Started, Features, API Reference, Changelog)
-3. For each section, what pages should be included? (list page slugs or titles)
-4. Should the navigation use tabs, dropdowns, or a flat group structure?
-5. Is there an OpenAPI/Swagger spec file? If so, what is its path?
-6. What language should the documentation be written in?
+1. Is there an OpenAPI/Swagger spec file? If so, what is its path?
+2. What language should the documentation be written in?
 ```
 
 Once the user provides the answers:
@@ -123,6 +119,26 @@ Example:
     }
   }
 }
+```
+
+---
+
+# Document templates
+
+Use the following templates when generating documentation for each section. Always detect the section first, then apply the correct format.
+
+Example:
+
+```mdx
+---
+sidebarTitle: "/devices"
+title: "Danh sách thiết bị đăng nhập"
+description: "API trả về danh sách thiết bị đã đăng nhập gần đây của user, kèm trạng thái đang dùng, vị trí IP và trạng thái online."
+icon: "monitor-smartphone"
+---
+
+## Mục đích
+
 ```
 
 ---
