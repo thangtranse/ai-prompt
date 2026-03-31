@@ -1,5 +1,5 @@
 ---
-name: mintlify
+name: mint
 description: Build and maintain documentation sites with Mintlify. Use when
   creating docs pages, configuring navigation, adding components, or setting up
   API references.
@@ -12,6 +12,20 @@ metadata:
 ---
 
 # Mintlify best practices
+
+## Scope boundary
+
+This skill defines reusable Mintlify best practices that can be shared across projects.
+
+Do not store project-specific policies here, such as:
+
+- fixed language requirements
+- repository-specific navigation taxonomy
+- project-specific routing maps
+- one-off color palettes mandated by a single repository
+- repository-specific icon libraries or diagram formats
+
+Project-specific constraints must live in the repository agent file and `docs/docs.json`.
 
 **Always consult [mintlify.com/docs](https://mintlify.com/docs) for components, configuration, and latest features.**
 
@@ -98,7 +112,7 @@ Next in the documentation, we will not use `#` but use `##` instead, to avoid co
 Optional frontmatter fields:
 
 - `sidebarTitle`: Short title for sidebar navigation.
-- `icon`: Lucide or Font Awesome icon name, URL, or file path. [Icons](https://lucide.dev/icons/)
+- `icon`: Follow the repository agent's icon convention. If the project does not specify one, prefer Lucide icons. [Icons](https://lucide.dev/icons/)
 - `tag`: Label next to the page title in the sidebar (for example, "NEW").
 - `mode`: Page layout mode (`default`, `wide`, `custom`).
 - `keywords`: Array of terms related to the page content for local search and SEO.
@@ -344,4 +358,3 @@ The `.mintignore` file is used to exclude files from a documentation repository 
 - [Documentation](https://mintlify.com/docs)
 - [Configuration schema](https://mintlify.com/docs.json)
 - [Feature requests](https://github.com/orgs/mintlify/discussions/categories/feature-requests)
-- [Bugs and feedback](https://github.com/orgs/mintlify/discussions/categories/bugs-feedback)
