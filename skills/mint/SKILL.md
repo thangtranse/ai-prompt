@@ -112,7 +112,7 @@ Next in the documentation, we will not use `#` but use `##` instead, to avoid co
 Optional frontmatter fields:
 
 - `sidebarTitle`: Short title for sidebar navigation.
-- `icon`: Follow the repository agent's icon convention. If the project does not specify one, prefer Lucide icons. [Icons](https://lucide.dev/icons/)
+- `icon`: Follow the repository agent's icon convention. If the project does not specify one, prefer Font Awesome icons (using free version)[Icons](https://fontawesome.com/search?ic=free-collection)
 - `tag`: Label next to the page title in the sidebar (for example, "NEW").
 - `mode`: Page layout mode (`default`, `wide`, `custom`).
 - `keywords`: Array of terms related to the page content for local search and SEO.
