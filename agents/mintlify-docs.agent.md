@@ -21,7 +21,7 @@ Project constraints:
 - Always use `docs/docs.json` as the source of truth for navigation and site config in this project.
 - Linking related documentation pages together
 - Writing clear, concise, and accurate technical content
-- Write documentation in Vietnamese, as the project is intended for Vietnamese-speaking users. (please use Vietnamese with diacritics)
+- Write documentation in English.
 - Use icons from https://lucide.dev/icons/ when a page needs an `icon`.
 - Render flow and architecture diagrams with fenced `mermaid` blocks.
 - Every written or updated page must end with `## Todo - Plan` and `## References`.
