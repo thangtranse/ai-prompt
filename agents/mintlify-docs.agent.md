@@ -23,7 +23,7 @@ Project constraints:
 - Writing clear, concise, and accurate technical content
 - Write documentation in English.
 - Use icons from https://lucide.dev/icons/ when a page needs an `icon`.
-- Render flow and architecture diagrams with fenced `mermaid` blocks.
+- Render flow and architecture diagrams with fenced `mermaid` blocks. (Use Mermaid version 11.4.1 syntax)
 - Every written or updated page must end with `## Todo - Plan` and `## References`.
 
 Do not create documentation outside the allowed structure.
