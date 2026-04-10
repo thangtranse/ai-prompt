@@ -1,74 +1,90 @@
 ---
 name: api-documentation
-description: '**WORKFLOW SKILL** — Create and maintain API documentation in Mintlify MDX format. Analyze handler code, create MDX pages, update docs.json navigation. USE FOR: writing docs for new API endpoints, updating docs for API changes, converting old docs to Mintlify. DO NOT USE FOR: general coding questions; non-API documentation; runtime debugging. INVOKES: Mintlify Docs agent, file system tools, grep/search tools.'
+description: '**WORKFLOW SKILL** — Coordinate API documentation for new or changed endpoints. Extract runtime behavior from code, reconcile it with OpenAPI/Swagger or other contract sources, build a normalized api-doc-brief, then use Mintlify Docs to write Mintlify MDX and update docs navigation. USE FOR: new API endpoints; API behavior changes; API doc backfills. DO NOT USE FOR: generic feature docs; non-API copywriting; runtime debugging.'
+argument-hint: feature name, endpoint path, route file, handler symbol, or API change summary
 ---
 
 # API Documentation Skill
 
 ## Workflow Overview
 
-This skill guides the creation of complete API documentation following Mintlify structure, from code analysis to publishing docs.
+This skill is the workflow contract for documenting a new or changed API in Mintlify.
+
+Use it with the custom-agent pipeline in this repository:
+
+- `Docs Orchestrator` is the top-level router when the request enters through a prompt such as `/document-api`
+- `API Doc Orchestrator` coordinates the work
+- `API Code Reader` extracts real runtime behavior from code
+- `API Contract Reader` reads OpenAPI/Swagger and other contract artifacts
+- `Mintlify Docs` writes the final MDX and updates `docs/docs.json`
+- `Docs QA` validates structure, completeness, and navigation
+
+Separate analysis from writing. Do not ask the writer to infer everything from raw code when a normalized brief can be prepared first.
 
 ## Step-by-Step Process
 
-### 1. Analyze API Code
-- Read handler function to understand logic, auth, params, response
-- Grep routes.js to find endpoint path and method
-- Identify auth requirements (sessionAuth, etc.)
-- Analyze error handling and response formats
-- **Understand code logic of router (routes.js), controller (handlers), service (helpers) processing**
-- Trace flow from route → middleware → handler → helper calls
-- Understand data flow, validations, business logic in all layers
-- **If API has middleware, describe middleware chain and processing logic in detail**
+### 1. Identify the API surface
 
-### 2. Draft MDX Content
-- Use Mintlify Docs agent to generate MDX page
-- Structure according to API Reference format:
-  - Endpoint info (method, path, handler)
-  - Authentication requirements
-  - Request/Response schemas
-  - Error codes
-  - Examples
-- Write in Vietnamese for Vietnamese users
+- Confirm which endpoint, route file, handler, or feature is being documented
+- Identify whether the task is a brand-new API, a behavior change, or a doc backfill
+- Locate related tests, schemas, fixtures, and existing docs before writing anything
 
-### 3. Add Logic Description
-- Describe API processing logic in detail from all layers
-- Router: middleware chain, routing logic
-- **Middleware: if present, describe each middleware in chain (auth, validation, logging, etc.)**
-- Controller: main handler logic, error handling
-- Service: helper functions, business logic, data processing
-- Include processing flow, conditions, data transformations
-- Explain business rules and edge cases
+### 2. Analyze runtime behavior from code
 
-### 4. Document Relations
-- List external services: Redis, RabbitMQ, PostgreSQL, etc.
-- Describe how API interacts with them (cache keys, message queues, DB queries)
-- Dependencies and integrations
+- Use `API Code Reader` or equivalent code analysis to read the route, middleware, handler, and service layers
+- Capture the real method, path, auth model, params, body, responses, errors, and side effects
+- Trace the full processing flow from route → middleware → handler → helper/service calls
+- If middleware exists, describe the chain and the purpose of each middleware
+- Record any business rules, validation branches, caching, queueing, DB writes, or external calls
 
-### 5. Add Operational Notes
-- Points to note when deploying/maintaining
-- Performance considerations
-- Monitoring points
-- Common failure scenarios
+### 3. Analyze the API contract
 
-### 6. Suggest Refactors (if needed)
-- Identify code smells or technical debt
-- Propose improvements for maintainability, performance
-- Suggest safer rollout strategies if there are risks
+- Use `API Contract Reader` or equivalent contract analysis to inspect OpenAPI, Swagger, schema files, fixtures, and API examples
+- Compare the declared contract with the actual implementation
+- Mark every mismatch explicitly: missing fields, stale examples, outdated status codes, auth drift, naming drift
+- If no contract artifact exists, say so clearly and treat code as the primary source of truth
 
-### 7. Update Navigation
-- Add new page to docs.json navigation
-- Ensure "API Reference" dropdown has new page
-- Create introduction page if not exists
+### 4. Build a normalized `api-doc-brief`
 
-### 8. Validate and Publish
-- Check links and references
-- Verify MDX syntax
-- Test navigation flow
+Before writing MDX, prepare a concise structured brief with at least:
+
+- endpoint summary
+- source files consulted
+- method and path
+- authentication requirements
+- request path, query, headers, and body contract
+- response contract and error codes
+- middleware chain
+- business logic summary
+- external relations and side effects
+- operational notes and rollout risks
+- example requests and responses
+- spec drift or unresolved gaps
+- proposed docs path and sidebar title
+
+### 5. Write Mintlify docs from the brief
+
+- Use `Mintlify Docs` to convert the normalized brief into production-ready MDX
+- Keep repository-specific Mintlify rules in the agent, not duplicated here
+- Default to English in this repository unless the user explicitly changes the documentation language
+- Update `docs/docs.json` when a new page or navigation entry is required
+
+### 6. Validate before closing
+
+- Use `Docs QA` or an equivalent validation pass to check frontmatter, heading levels, required sections, and navigation
+- Verify the page does not invent unsupported request or response details
+- Confirm every documented behavior can be traced to code, contract artifacts, or an explicit assumption note
+
+### 7. Capture follow-ups when docs reveal gaps
+
+- If the implementation and contract disagree, call that out instead of silently fixing the narrative
+- If examples or schemas are missing, leave an explicit follow-up item
+- If the code suggests refactors or rollout risks, add them as recommendations, not hidden assumptions
 
 ## Quality Criteria
 
 - Docs must cover fully: auth, params, responses, errors
+- Code and spec mismatches must be called out explicitly
 - Correct Mintlify MDX format (headings, code blocks, tables)
 - Navigation updated correctly
 - Links between pages work
@@ -82,25 +98,30 @@ This skill guides the creation of complete API documentation following Mintlify 
   ---
   ```
 - Start with ## for all headings, do not use #
+- End every generated or updated page with `## Todo - Plan` and `## References`
 - Include sections: Logic Description, Relations, Operational Notes, Refactor Suggestions (if applicable)
-- **Must understand and document logic from all layers: router (routes.js), controller (handlers), service (helpers)**
-- **If API has middleware, must describe middleware chain and processing logic**
+- Must understand and document logic from all relevant layers: router, middleware, controller, service/helper
+- If API has middleware, describe the middleware chain and processing logic
+- Do not let the writer infer missing contract details from partial context when analysis is incomplete
 
 ## Decision Points
 
 - If API is complex (multi-step logic): Create flow diagram
 - If there are related APIs: Link in "Related APIs" section
 - If auth is complex: Detail each required credential
+- If Swagger/OpenAPI is stale: prioritize code as source of truth and mark the drift
+- If examples are missing: synthesize only conservative examples that match the verified contract
 
 ## Completion Check
 
 - MDX file created in docs/api-reference/
 - docs.json updated with new page
+- `api-doc-brief` was prepared before the writing phase
 - Content accurate and complete
 - No broken links
 
 ## Bundled Assets
 
-- MDX template for API docs
-- Example docs.json updates
-- Validation checklist script
+- Workflow contract for `API Doc Orchestrator`
+- Brief structure for implementation vs contract reconciliation
+- Validation checklist for final Mintlify output

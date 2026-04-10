@@ -17,6 +17,7 @@ git submodule add https://github.com/thangtranse/ai-prompt.git .github/ai-prompt
 ```json
 {
   "chat.agent.maxRequests": 50,
+  "chat.customAgentInSubagent.enabled": true,
   "chat.agentSkillsLocations": {
     ".github/ai-prompt/skills": true,
     ".github/skills": true,
@@ -46,6 +47,17 @@ git submodule add https://github.com/thangtranse/ai-prompt.git .github/ai-prompt
   ]
 }
 ```
+
+### API documentation workflow
+
+- Use `/document-api` as the entrypoint for documenting a new or changed API.
+- Use `/document-feature` as the entrypoint for documenting a feature, workflow, or integration.
+- Use `/document-service` as the entrypoint for documenting a service, module, or worker.
+- All prompts run the `Docs Orchestrator` custom agent.
+- `Docs Orchestrator` routes API-only work to `API Doc Orchestrator`.
+- `Docs Orchestrator` routes feature/service/workflow work through `Feature Context Reader`, `Flow Mapper`, `Docs Clarifier`, `Mintlify Docs`, and `Docs QA`.
+- `API Doc Orchestrator` still delegates to `API Code Reader`, `API Contract Reader`, `Mintlify Docs`, and `Docs QA` for endpoint-level API documentation.
+- `chat.customAgentInSubagent.enabled` must be enabled for custom-agent subagent orchestration.
 
 # References
 
