@@ -63,3 +63,4 @@ git submodule add https://github.com/thangtranse/ai-prompt.git .github/ai-prompt
 
 1. [VSCode copilot configuration](https://code.visualstudio.com/docs/copilot/reference/copilot-settings#_general-settings)
 2. [VSCode config 'code review', 'Commit messages', custom instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_specify-custom-instructions-in-settings)
+3. [Skill NestJS](https://github.com/Kadajett/agent-nestjs-skills)
