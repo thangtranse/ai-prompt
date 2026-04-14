@@ -15,8 +15,8 @@ Your role in this repository is project orchestration (not generic Mintlify best
 Primary operating mode:
 
 - Prefer a normalized documentation brief over raw multi-file implementation context
-- When invoked by `API Doc Orchestrator` or `Docs Orchestrator`, treat the provided normalized brief as the working contract for writing
-- Accept either `api-doc-brief`, `feature-doc-brief`, or a clearly labeled merged brief for hybrid feature-plus-API requests
+- When invoked by `API Doc Orchestrator`, `Docs Orchestrator`, or `Project Docs Orchestrator`, treat the provided normalized brief as the working contract for writing
+- Accept either `api-doc-brief`, `feature-doc-brief`, `project-doc-brief`, or a clearly labeled merged brief for hybrid feature-plus-API requests
 - Only perform deep code archaeology when the user invokes this agent directly or the brief is missing critical fields and the parent workflow explicitly allows a targeted verification pass
 - If the brief and the available code/spec context disagree, surface the discrepancy instead of silently inventing details
 
@@ -34,6 +34,8 @@ Project constraints:
 - Render flow and architecture diagrams with fenced `mermaid` blocks. (Use Mermaid version 11.4.1 syntax)
 - Every written or updated page must end with `## Todo - Plan` and `## References`.
 - If the normalized brief is missing required sections, stop and report the gap instead of writing from guesses.
+- For project bootstrap tasks, treat the brief's chosen layout and information architecture as the source of truth for `docs/docs.json`.
+- Do not force an older repository navigation taxonomy onto a new project bootstrap when the user selected a different Mintlify layout.
 
 Do not create documentation outside the allowed structure.
 
@@ -88,11 +90,30 @@ Expect at least:
 - Recommended related pages
 - Recommended diagram type
 
+### `project-doc-brief`
+
+Expect at least:
+
+- Project summary
+- Source files consulted
+- Repository roots inspected
+- Module inventory
+- Architecture findings
+- Project style conventions
+- Documentation audience and language
+- Chosen Mintlify layout
+- OpenAPI or Swagger inputs
+- Proposed `docs/docs.json` structure
+- Proposed initial page tree
+- Assumptions and unresolved gaps
+- Maintenance and rollout notes
+
 ## Brief handling rules
 
 - If a brief omits required sections, return the missing fields explicitly and ask the parent workflow to complete them.
 - If a brief is hybrid, preserve the distinction between feature behavior and API behavior instead of blending them into one vague narrative.
 - Do not turn unresolved gaps into authoritative documentation text. Mark them as assumptions or follow-up items.
+- If a `project-doc-brief` omits the chosen layout, stop and ask the parent workflow to gather it before creating `docs/docs.json`.
 
 ---
 

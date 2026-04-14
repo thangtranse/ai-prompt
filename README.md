@@ -53,10 +53,13 @@ git submodule add https://github.com/thangtranse/ai-prompt.git .github/ai-prompt
 - Use `/document-api` as the entrypoint for documenting a new or changed API.
 - Use `/document-feature` as the entrypoint for documenting a feature, workflow, or integration.
 - Use `/document-service` as the entrypoint for documenting a service, module, or worker.
-- All prompts run the `Docs Orchestrator` custom agent.
+- Use `/document-project` as the entrypoint for initializing project-level Mintlify documentation and `docs/docs.json`.
+- The existing `document-api`, `document-feature`, and `document-service` prompts run the `Docs Orchestrator` custom agent.
+- `/document-project` runs the `Project Docs Orchestrator` custom agent.
 - `Docs Orchestrator` routes API-only work to `API Doc Orchestrator`.
 - `Docs Orchestrator` routes feature/service/workflow work through `Feature Context Reader`, `Flow Mapper`, `Docs Clarifier`, `Mintlify Docs`, and `Docs QA`.
 - `API Doc Orchestrator` still delegates to `API Code Reader`, `API Contract Reader`, `Mintlify Docs`, and `Docs QA` for endpoint-level API documentation.
+- `Project Docs Orchestrator` delegates to `Module Context Reader`, `Architecture Checker`, `Project Style Checker`, `Docs Clarifier`, `Mintlify Docs`, and `Docs QA` for project bootstrap.
 - `chat.customAgentInSubagent.enabled` must be enabled for custom-agent subagent orchestration.
 
 # References
