@@ -62,6 +62,22 @@ git submodule add https://github.com/thangtranse/ai-prompt.git .github/ai-prompt
 - `Project Docs Orchestrator` delegates to `Module Context Reader`, `Architecture Checker`, `Project Style Checker`, `Docs Clarifier`, `Mintlify Docs`, and `Docs QA` for project bootstrap.
 - `chat.customAgentInSubagent.enabled` must be enabled for custom-agent subagent orchestration.
 
+### Core code review rules
+
+Use the following reusable rules when reviewing or refactoring code for readability and maintainability:
+
+- `rules/arch-avoid-magic-numbers.md`
+- `rules/arch-use-meaningful-names.md`
+- `rules/db-use-snake-case-model-fields.md`
+- `rules/arch-single-purpose-functions.md`
+- `rules/arch-use-early-return.md`
+
+Rule interaction:
+
+- Prefer early return for guard clauses to reduce nesting.
+- Keep a single main happy-path return when possible.
+- Allow one additional return for guard clauses when it makes the function clearer.
+
 # References
 
 1. [VSCode copilot configuration](https://code.visualstudio.com/docs/copilot/reference/copilot-settings#_general-settings)
